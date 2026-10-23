@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import type { AddTodoFormProps } from '../../types/todo';
+import styles from './AddTodoForm.module.css'
 
 const AddTodoForm: React.FC<AddTodoFormProps> = ({onAddTodo}) => {
     //Storing the text of the input box as its state defaulting to an empty string
@@ -19,14 +20,15 @@ const AddTodoForm: React.FC<AddTodoFormProps> = ({onAddTodo}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input 
+        <form className={styles.form} onSubmit={handleSubmit}>
+            <input
+            className={styles.input} 
             type='text' 
             placeholder='Enter a new todo..' 
             onChange={(e:React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}>
             </input>
 
-            <button type='submit'>Add</button>
+            <button className={styles.submitButton}type='submit'>Add</button>
         </form>
     );
 }
