@@ -2,7 +2,7 @@ import React from 'react';
 import type { TodoListProps } from '../../types/todo';
 import TodoItem from '../TodoItem/TodoItem';
 
-const TodoList: React.FC<TodoListProps> = ({todos, onDeleteTodo}) => {
+const TodoList: React.FC<TodoListProps> = ({todos, onToggleTodo, onDeleteTodo}) => {
     return (
         <div>
             {
@@ -11,7 +11,11 @@ const TodoList: React.FC<TodoListProps> = ({todos, onDeleteTodo}) => {
                 (
                     todos.map(
                         todo => (
-                            <TodoItem key={todo.id} todo={todo} onDelete={onDeleteTodo}/>
+                            <TodoItem 
+                            key={todo.id} 
+                            todo={todo} 
+                            onToggle={onToggleTodo}
+                            onDelete={onDeleteTodo}/>
                         )
                     )
                 )

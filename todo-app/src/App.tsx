@@ -20,11 +20,14 @@ const TodoApp: React.FC = () => {
     //So react will detect changes and re-render
     const deleteTodo = (id: number) => setTodos(todos.filter(todo => todo.id !== id));
 
+    const toggleTodo = (id: number) => setTodos(todos.map(todo => 
+        todo.id === id ? {...todo, completed: !todo.completed} : todo
+    ));
     return (
         <div className={styles.app}>
             <h1 className={styles.title}>My Awesome Todo App</h1>
             <AddTodoForm onAddTodo={addTodo}/>
-            <TodoList todos={todos} onDeleteTodo={deleteTodo}/>
+            <TodoList todos={todos} onDeleteTodo={deleteTodo} onToggleTodo={toggleTodo} />
             <div className={styles.footer}>
                 Total todos: {todos.length}
             </div>

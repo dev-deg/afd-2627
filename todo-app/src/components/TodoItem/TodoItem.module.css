@@ -22,3 +22,14 @@
 .deleteButton:hover {
     background-color: #cc3333;
 }
+
+.checkbox{
+    width: 18px;
+    height: 18px;
+    cursor: pointer
+}
+
+.completedText {
+    text-decoration: line-through;
+    color: #666;
+}
