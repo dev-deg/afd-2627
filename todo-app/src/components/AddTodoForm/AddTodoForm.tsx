@@ -5,6 +5,7 @@ import styles from './AddTodoForm.module.css'
 const AddTodoForm: React.FC<AddTodoFormProps> = ({onAddTodo}) => {
     //Storing the text of the input box as its state defaulting to an empty string
     const [inputValue, setInputValue] = useState<string>(''); 
+    const inputRef = React.useRef<HTMLInputElement>(null);
 
     //Function that is called when the submit button is pressed
     const handleSubmit = (e:React.SubmitEvent<HTMLFormElement>) => {
@@ -15,13 +16,17 @@ const AddTodoForm: React.FC<AddTodoFormProps> = ({onAddTodo}) => {
             //Adds todo item through onAddTodoCallback
             onAddTodo(inputValue);
             //Resets the input value to empty
-            setInputValue(''); 
+            setInputValue('');
+            if (inputRef.current) {
+                inputRef.current.value = '';
+            }
         }
     }
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
             <input
+            ref={inputRef}
             className={styles.input} 
             type='text' 
             placeholder='Enter a new todo..' 

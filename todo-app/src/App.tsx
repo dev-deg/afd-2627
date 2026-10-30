@@ -10,7 +10,8 @@ const TodoApp: React.FC = () => {
     const addTodo = (text: string)=>{
         const newTodo: Todo = {
             id: Date.now(),
-            text: text
+            text: text,
+            completed: false
         }
         //Instantiating a new arrow (with spread op)#
         //So react will detect changes and re-render
@@ -23,11 +24,16 @@ const TodoApp: React.FC = () => {
     const toggleTodo = (id: number) => setTodos(todos.map(todo => 
         todo.id === id ? {...todo, completed: !todo.completed} : todo
     ));
+
+    const editTodo = (id: number, newText: string) => setTodos(todos.map(todo => 
+        todo.id === id ? {...todo, text: newText} : todo
+    ));
+
     return (
         <div className={styles.app}>
             <h1 className={styles.title}>My Awesome Todo App</h1>
             <AddTodoForm onAddTodo={addTodo}/>
-            <TodoList todos={todos} onDeleteTodo={deleteTodo} onToggleTodo={toggleTodo} />
+            <TodoList todos={todos} onDeleteTodo={deleteTodo} onToggleTodo={toggleTodo} onEditTodo={editTodo} />
             <div className={styles.footer}>
                 Total todos: {todos.length}
             </div>
