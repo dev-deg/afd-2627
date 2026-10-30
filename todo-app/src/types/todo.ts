@@ -1,3 +1,5 @@
+export type FilterType = 'all' | 'active' | 'completed';
+
 export interface Todo {
     id: number;
     text: string;
@@ -21,3 +23,8 @@ export interface TodoListProps {
 export interface AddTodoFormProps {
     onAddTodo: (text: string) => void;
 }
+
+export interface FilterButtonsProps {
+    activeFilter: FilterType;
+    onFilterChange: (filter: FilterType) => void;
+};

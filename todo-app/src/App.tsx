@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import AddTodoForm from './components/AddTodoForm/AddTodoForm';
 import type { Todo } from './types/todo';
 import TodoList from './components/TodoList/TodoList';
+import FilterButtons from './components/FilterButtons/FilterButtons';
 import styles from './App.module.css'
 
 const TodoApp: React.FC = () => {
@@ -29,10 +30,14 @@ const TodoApp: React.FC = () => {
         todo.id === id ? {...todo, text: newText} : todo
     ));
 
+    const filterTodos = (filter: 'all' | 'active' | 'completed') => {
+    }
+
     return (
         <div className={styles.app}>
             <h1 className={styles.title}>My Awesome Todo App</h1>
             <AddTodoForm onAddTodo={addTodo}/>
+            <FilterButtons activeFilter="all" onFilterChange={() => {filterTodos('all')}} />
             <TodoList todos={todos} onDeleteTodo={deleteTodo} onToggleTodo={toggleTodo} onEditTodo={editTodo} />
             <div className={styles.footer}>
                 Total todos: {todos.length}
