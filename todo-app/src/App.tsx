@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import AddTodoForm from './components/AddTodoForm/AddTodoForm';
-import type { Todo } from './types/todo';
+import type { Todo, FilterType } from './types/todo';
 import TodoList from './components/TodoList/TodoList';
 import FilterButtons from './components/FilterButtons/FilterButtons';
 import styles from './App.module.css'
 
 const TodoApp: React.FC = () => {
     const [todos, setTodos] = useState<Todo[]>([]);
+    const [filter, setFilter] = useState<FilterType>('all');
 
     const addTodo = (text: string)=>{
         const newTodo: Todo = {
@@ -30,15 +31,18 @@ const TodoApp: React.FC = () => {
         todo.id === id ? {...todo, text: newText} : todo
     ));
 
-    const filterTodos = (filter: 'all' | 'active' | 'completed') => {
-    }
+    const filteredTodos: Todo[] = todos.filter(todo => {
+        if(filter === 'active') return !todo.completed;
+        if(filter === 'completed') return todo.completed;
+        return true; //return all the todos if filter is 'all'
+    });
 
     return (
         <div className={styles.app}>
             <h1 className={styles.title}>My Awesome Todo App</h1>
             <AddTodoForm onAddTodo={addTodo}/>
-            <FilterButtons activeFilter="all" onFilterChange={() => {filterTodos('all')}} />
-            <TodoList todos={todos} onDeleteTodo={deleteTodo} onToggleTodo={toggleTodo} onEditTodo={editTodo} />
+            <FilterButtons activeFilter={filter} onFilterChange={setFilter} />
+            <TodoList todos={filteredTodos} onDeleteTodo={deleteTodo} onToggleTodo={toggleTodo} onEditTodo={editTodo} />
             <div className={styles.footer}>
                 Total todos: {todos.length}
             </div>
