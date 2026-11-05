@@ -28,3 +28,7 @@ export interface FilterButtonsProps {
     activeFilter: FilterType;
     onFilterChange: (filter: FilterType) => void;
 };
+
+export interface TodoFooterProps {
+    todos: Todo[];
+}

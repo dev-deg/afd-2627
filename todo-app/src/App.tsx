@@ -4,6 +4,7 @@ import type { Todo, FilterType } from './types/todo';
 import TodoList from './components/TodoList/TodoList';
 import FilterButtons from './components/FilterButtons/FilterButtons';
 import styles from './App.module.css'
+import TodoFooter from './components/TodoFooter/TodoFooter';
 
 const TodoApp: React.FC = () => {
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -43,9 +44,7 @@ const TodoApp: React.FC = () => {
             <AddTodoForm onAddTodo={addTodo}/>
             <FilterButtons activeFilter={filter} onFilterChange={setFilter} />
             <TodoList todos={filteredTodos} onDeleteTodo={deleteTodo} onToggleTodo={toggleTodo} onEditTodo={editTodo} />
-            <div className={styles.footer}>
-                Total todos: {todos.length}
-            </div>
+            <TodoFooter todos={todos} />
         </div>
     )
 }
