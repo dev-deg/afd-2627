@@ -31,4 +31,5 @@ export interface FilterButtonsProps {
 
 export interface TodoFooterProps {
     todos: Todo[];
+    onClearCompleted: () => void;
 }

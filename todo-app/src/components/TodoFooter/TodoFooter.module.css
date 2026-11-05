@@ -21,3 +21,19 @@
     background-color: #f5f5f5;
     font-weight: 500;
 }
+
+.clearButton {
+    padding: 8px 16px;
+    background-color: #dc3545;
+    color:white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;    
+}
+
+.clearButton:hover {
+    background-color: #c82333;
+}

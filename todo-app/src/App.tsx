@@ -32,6 +32,8 @@ const TodoApp: React.FC = () => {
         todo.id === id ? {...todo, text: newText} : todo
     ));
 
+    const clearCompleted = () => setTodos(todos.filter(todo => !todo.completed));
+
     const filteredTodos: Todo[] = todos.filter(todo => {
         if(filter === 'active') return !todo.completed;
         if(filter === 'completed') return todo.completed;
@@ -44,7 +46,7 @@ const TodoApp: React.FC = () => {
             <AddTodoForm onAddTodo={addTodo}/>
             <FilterButtons activeFilter={filter} onFilterChange={setFilter} />
             <TodoList todos={filteredTodos} onDeleteTodo={deleteTodo} onToggleTodo={toggleTodo} onEditTodo={editTodo} />
-            <TodoFooter todos={todos} />
+            <TodoFooter todos={todos} onClearCompleted={clearCompleted} />
         </div>
     )
 }
