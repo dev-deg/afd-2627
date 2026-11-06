@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import type {TodoItemProps} from "../../types/todo"
 import styles from './TodoItem.module.css'
+import RenderBadge from '../RenderBadge/RenderBadge';
+import useRenderCount from '../../hooks/useRenderCount';
 
 const TodoItem: React.FC<TodoItemProps> = ({todo, onDelete, onToggle, onEdit}) => {
     const [isEditing, setIsEditing] = React.useState(false);
     const [editedText, setEditedText] = React.useState(todo.text);
     const inputRef = React.useRef<HTMLInputElement>(null);
 
+    const renderCount = useRenderCount();
     useEffect(() => {
         if (isEditing && inputRef.current) {
             inputRef.current.focus();
@@ -64,6 +67,11 @@ const TodoItem: React.FC<TodoItemProps> = ({todo, onDelete, onToggle, onEdit}) =
                 </span>
             )}
             <button className={styles.deleteButton}onClick={()=> onDelete(todo.id)}>Delete</button>
+            <div>
+                <small>
+                    <RenderBadge count={renderCount} />
+                </small>
+            </div>
         </div>
     );
 };

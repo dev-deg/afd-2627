@@ -1,8 +1,11 @@
 import React from 'react';
 import styles from './TodoFooter.module.css'
 import type { TodoFooterProps} from '../../types/todo';
+import useRenderCount from '../../hooks/useRenderCount';
+import RenderBadge from '../RenderBadge/RenderBadge';
 
 const TodoFooter: React.FC<TodoFooterProps> = ({ todos, onClearCompleted }) => {
+    const renderCount = useRenderCount();
     return (
         <footer>
             <div className={styles.footer}>
@@ -23,6 +26,11 @@ const TodoFooter: React.FC<TodoFooterProps> = ({ todos, onClearCompleted }) => {
                         </button> : null
                     }
 
+                    <div>
+                        <small>
+                            <RenderBadge count={renderCount} />
+                        </small>
+                    </div>
                 </div>
             </div>
         </footer>

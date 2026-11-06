@@ -33,3 +33,13 @@ export interface TodoFooterProps {
     todos: Todo[];
     onClearCompleted: () => void;
 }
+
+export interface RenderBadgeProps {
+  count: number;
+  noisyAfter?: number;
+}
+
+export interface DevBarProps {
+    onSeed: (count: number) => void;
+    onReset: () => void;
+}

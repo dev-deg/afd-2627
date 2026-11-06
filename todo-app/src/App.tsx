@@ -5,6 +5,9 @@ import TodoList from './components/TodoList/TodoList';
 import FilterButtons from './components/FilterButtons/FilterButtons';
 import styles from './App.module.css'
 import TodoFooter from './components/TodoFooter/TodoFooter';
+import RenderBadge from './components/RenderBadge/RenderBadge';
+import useRenderCount from './hooks/useRenderCount';
+import DevBar from './components/DevBar/DevBar';
 
 const TodoApp: React.FC = () => {
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -40,9 +43,28 @@ const TodoApp: React.FC = () => {
         return true; //return all the todos if filter is 'all'
     });
 
+    const renderCount = useRenderCount();
+
+    const resetTodos = () => setTodos([]);
+
+    const seedTodos = (count: number) => setTodos([
+        ...todos,
+        ...Array.from({length: count}, (_, i) => ({
+            id: Date.now() + i,
+            text: `Seeded Todo ${i + 1}`,
+            completed: false
+        }))
+    ]);
+
     return (
         <div className={styles.app}>
-            <h1 className={styles.title}>My Awesome Todo App</h1>
+            <h1 className={styles.title}>
+                My Awesome Todo App
+                <small>
+                    <RenderBadge count={renderCount} />
+                </small>
+            </h1>
+            <DevBar onSeed={seedTodos} onReset={resetTodos} />
             <AddTodoForm onAddTodo={addTodo}/>
             <FilterButtons activeFilter={filter} onFilterChange={setFilter} />
             <TodoList todos={filteredTodos} onDeleteTodo={deleteTodo} onToggleTodo={toggleTodo} onEditTodo={editTodo} />
