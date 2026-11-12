@@ -38,4 +38,4 @@ const TodoFooter: React.FC<TodoFooterProps> = ({ todos, onClearCompleted }) => {
     };
 
 
-export default TodoFooter;
+export default React.memo(TodoFooter);

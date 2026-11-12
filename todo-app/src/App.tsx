@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import AddTodoForm from './components/AddTodoForm/AddTodoForm';
 import type { Todo, FilterType } from './types/todo';
 import TodoList from './components/TodoList/TodoList';
@@ -13,7 +13,7 @@ const TodoApp: React.FC = () => {
     const [todos, setTodos] = useState<Todo[]>([]);
     const [filter, setFilter] = useState<FilterType>('all');
 
-    const addTodo = (text: string)=>{
+    const addTodo = useCallback((text: string)=>{
         const newTodo: Todo = {
             id: Date.now(),
             text: text,
@@ -21,40 +21,48 @@ const TodoApp: React.FC = () => {
         }
         //Instantiating a new arrow (with spread op)#
         //So react will detect changes and re-render
-        setTodos([...todos,newTodo]); 
-    }
+        setTodos(prev => [...prev, newTodo]); 
+    }, [todos]);
+
     //similar to the spread op, filter creates a new array
     //So react will detect changes and re-render
-    const deleteTodo = (id: number) => setTodos(todos.filter(todo => todo.id !== id));
+    const deleteTodo = useCallback((id: number) => setTodos(prev => prev.filter(todo => todo.id !== id)), [todos]);
 
-    const toggleTodo = (id: number) => setTodos(todos.map(todo => 
+    const toggleTodo = useCallback((id: number) => setTodos(prev => prev.map(todo => 
         todo.id === id ? {...todo, completed: !todo.completed} : todo
-    ));
+    )), []);
 
-    const editTodo = (id: number, newText: string) => setTodos(todos.map(todo => 
+    const editTodo = useCallback((id: number, newText: string) => setTodos(prev => prev.map(todo => 
         todo.id === id ? {...todo, text: newText} : todo
-    ));
+    )), []);
 
-    const clearCompleted = () => setTodos(todos.filter(todo => !todo.completed));
+    const clearCompleted = useCallback(() => setTodos(prev => prev.filter(todo => !todo.completed)), []);
 
-    const filteredTodos: Todo[] = todos.filter(todo => {
+    // This is not worth memoising for a small amount of memos - this is quite a cheap operation, 
+    // and the memoisation itself has a cost. If we had a large number of todos, then it would be worth memoising.
+    const filteredTodos: Todo[] = useMemo(() => todos.filter(todo => {
         if(filter === 'active') return !todo.completed;
         if(filter === 'completed') return todo.completed;
         return true; //return all the todos if filter is 'all'
-    });
+    }), [todos, filter]);
 
     const renderCount = useRenderCount();
 
-    const resetTodos = () => setTodos([]);
+    const resetTodos = useCallback(() => setTodos([]), []);
 
-    const seedTodos = (count: number) => setTodos([
-        ...todos,
+    const seedTodos = useCallback((count: number) => setTodos(prev =>[
+        ...prev,
         ...Array.from({length: count}, (_, i) => ({
             id: Date.now() + i,
             text: `Seeded Todo ${i + 1}`,
             completed: false
         }))
-    ]);
+    ]), []);
+
+    const addTwoAtOnce = useCallback(() => {
+        addTodo('First Todo');
+        addTodo('Second Todo');
+    }, [addTodo]);
 
     return (
         <div className={styles.app}>
@@ -64,7 +72,7 @@ const TodoApp: React.FC = () => {
                     <RenderBadge count={renderCount} />
                 </small>
             </h1>
-            <DevBar onSeed={seedTodos} onReset={resetTodos} />
+            <DevBar onSeed={seedTodos} onReset={resetTodos} onAddTwo={addTwoAtOnce} />
             <AddTodoForm onAddTodo={addTodo}/>
             <FilterButtons activeFilter={filter} onFilterChange={setFilter} />
             <TodoList todos={filteredTodos} onDeleteTodo={deleteTodo} onToggleTodo={toggleTodo} onEditTodo={editTodo} />

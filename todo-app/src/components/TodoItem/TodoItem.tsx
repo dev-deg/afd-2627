@@ -76,4 +76,4 @@ const TodoItem: React.FC<TodoItemProps> = ({todo, onDelete, onToggle, onEdit}) =
     );
 };
 
-export default TodoItem;
+export default React.memo(TodoItem);

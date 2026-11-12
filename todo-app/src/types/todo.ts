@@ -42,4 +42,11 @@ export interface RenderBadgeProps {
 export interface DevBarProps {
     onSeed: (count: number) => void;
     onReset: () => void;
+    onAddTwo: () => void;
+}
+
+export interface SearchBoxProps{
+    value: string;
+    onChange: (newValue: string) => void;
+    isStale: boolean; // this is going to be true when the search is taking a long time to complete and the user has typed something new since the last search started
 }

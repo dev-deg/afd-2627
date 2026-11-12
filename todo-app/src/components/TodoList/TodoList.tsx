@@ -33,4 +33,4 @@ const TodoList: React.FC<TodoListProps> = ({todos, onToggleTodo, onDeleteTodo, o
     )
 }
 
-export default TodoList;
+export default React.memo(TodoList);
