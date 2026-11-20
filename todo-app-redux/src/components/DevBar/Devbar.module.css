@@ -1,0 +1,31 @@
+.devBar{
+    margin-bottom: 20px;
+    padding: 10px 12px;
+    border: 1px dashed #c7d2fe;
+    border-radius: 6px;
+    background-color: #f8faff;
+    font-size: 13px;
+    color: #4338ca;
+}
+
+.buttons{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.devButton{
+    padding: 5px 10px;
+    border: 1px solid #c7d2fe;
+    border-radius: 4px;
+    background-color: white;
+    color: #4338ca;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.devButton:hover{
+    background-color: #eef2ff;
+}
